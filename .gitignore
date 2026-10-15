@@ -1,0 +1,12 @@
+.DS_Store
+.vs/
+**/bin/
+**/obj/
+**/node_modules/
+**/.svelte-kit/
+**/build/
+**/TestResults/
+*.user
+.env
+test-logs/
+**/.e2e-state.json
