@@ -29,7 +29,7 @@ step by step.
 
 ## GitHub Projects
 
-Project board: *link will be added here.*
+Project board: [Incident Management System](https://github.com/users/merictopal/projects/2) – tasks for each timeline milestone.
 
 ## Additional documents
 
