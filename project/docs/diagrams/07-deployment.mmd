@@ -1,0 +1,19 @@
+flowchart LR
+    browser(["Browser"])
+    subgraph host["Host machine"]
+        p5173["localhost:5173"]
+        p5000["localhost:5000"]
+        subgraph docker["Docker network (docker compose)"]
+            client["client<br/>Node production server"]
+            gateway["api-gateway :8080"]
+            user["user-service :8080"]
+            incident["incident-service :8080"]
+            notification["notification-service :8080"]
+            monitoring["monitoring-service :8080"]
+        end
+    end
+    browser --> p5173 --> client
+    browser --> p5000 --> gateway
+    gateway --> user & incident & notification & monitoring
+    classDef hidden fill:#f1f5f9,stroke:#94a3b8,color:#334155
+    class user,incident,notification,monitoring hidden

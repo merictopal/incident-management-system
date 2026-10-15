@@ -1,0 +1,13 @@
+flowchart TB
+    client["Web client<br/>[container: SvelteKit, TypeScript]<br/>Employee / IT Support workspaces"]
+    gateway["API Gateway<br/>[container: ASP.NET Core, YARP]<br/>single entry point · CORS · login rate limit"]
+    user["User Service<br/>[container: ASP.NET Core]<br/>login · password hash · JWT"]
+    incident["Incident Service<br/>[container: ASP.NET Core]<br/>incidents · role checks"]
+    notification["Notification Service<br/>[container: ASP.NET Core, SignalR]<br/>real-time hub · history"]
+    monitoring["Monitoring Service<br/>[container: ASP.NET Core]<br/>health checks"]
+
+    client -- "REST requests + SignalR connection (JWT)" --> gateway
+    gateway -- "forwards /api/users" --> user
+    gateway -- "forwards /api/incidents" --> incident
+    gateway -- "forwards /api/notifications, /hubs" --> notification
+    gateway -- "forwards /api/monitoring" --> monitoring

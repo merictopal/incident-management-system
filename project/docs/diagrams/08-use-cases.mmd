@@ -1,0 +1,20 @@
+flowchart LR
+    employee(("Employee"))
+    it(("IT Support"))
+    monitor(("Monitoring<br/>Service"))
+
+    subgraph system["Real-Time Incident Management System"]
+        uc1["Sign in / register"]
+        uc2["Report an incident"]
+        uc3["Follow own incidents live"]
+        uc4["Reply to IT Support"]
+        uc5["See all incidents, filter by status"]
+        uc6["Change status, add update"]
+        uc7["Delete an incident"]
+        uc8["Watch live service health"]
+        uc9["Open / resolve automatic incident"]
+    end
+
+    employee --- uc1 & uc2 & uc3 & uc4
+    it --- uc1 & uc5 & uc6 & uc7 & uc8
+    monitor --- uc9

@@ -1,0 +1,21 @@
+flowchart LR
+    gw["API Gateway"]
+    subgraph incidentService["Incident Service [container]"]
+        auth["JWT authentication<br/>+ role policies<br/>[ServiceDefaults]"]
+        endpoints["IncidentEndpoints<br/>[minimal API routes]<br/>validation, permissions"]
+        model["Incident<br/>[domain model]<br/>status changes under lock"]
+        store["IncidentStore<br/>[in-memory store]"]
+        publisher["NotificationPublisher<br/>[typed HttpClient, 3 s timeout]"]
+        internal["Internal endpoints<br/>[/internal/incidents, API key]"]
+    end
+    notif["Notification Service"]
+    mon["Monitoring Service"]
+
+    gw -- "HTTP request with JWT" --> auth
+    auth -- "authenticated user (id, name, role)" --> endpoints
+    endpoints -- "creates / changes" --> model
+    endpoints -- "saves / queries" --> store
+    endpoints -- "publishes event after a change" --> publisher
+    publisher -- "POST /internal/notifications" --> notif
+    mon -- "opens / resolves automatic incident" --> internal
+    internal -- "saves" --> store

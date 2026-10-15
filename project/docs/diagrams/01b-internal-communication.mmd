@@ -1,0 +1,15 @@
+flowchart TB
+    monitoring["Monitoring Service"]
+    subgraph monitored["Monitored services (GET /health every 5 s)"]
+        direction LR
+        user["User Service"]
+        incident["Incident Service"]
+        notification["Notification Service"]
+    end
+    browsers(["Browsers"])
+
+    monitoring -- "health checks" --> monitored
+    monitoring -. "open / resolve automatic incident" .-> incident
+    monitoring -. "live status snapshot" .-> notification
+    incident -. "incident event" .-> notification
+    notification == "SignalR: IncidentChanged, ServiceStatusUpdated" ==> browsers

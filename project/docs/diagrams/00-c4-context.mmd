@@ -1,0 +1,7 @@
+flowchart LR
+    employee(["Employee<br/>[person]<br/>reports IT problems and follows them"])
+    it(["IT Support staff<br/>[person]<br/>handles every incident"])
+    system["Real-Time Incident Management System<br/>[software system]<br/>reporting, tracking and live notification of IT incidents"]
+
+    employee -- "reports incidents, replies,<br/>receives live updates (HTTPS / WebSocket)" --> system
+    it -- "manages incidents, watches service health,<br/>receives live updates (HTTPS / WebSocket)" --> system
