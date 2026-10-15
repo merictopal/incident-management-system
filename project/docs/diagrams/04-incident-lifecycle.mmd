@@ -1,0 +1,9 @@
+stateDiagram-v2
+    direction LR
+    InProgress: In Progress
+    [*] --> Open: employee reports
+    Open --> InProgress: IT Support
+    InProgress --> Resolved: IT Support or monitoring
+    Open --> Resolved: monitoring auto-resolve
+    Resolved --> Closed: IT Support
+    Closed --> [*]

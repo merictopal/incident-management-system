@@ -1,0 +1,15 @@
+sequenceDiagram
+    autonumber
+    actor E as Employee
+    participant I as Incident Service
+    participant N as Notification Service (down)
+    participant M as Monitoring Service
+
+    E->>I: POST /api/incidents
+    I->>I: save incident
+    I-xN: POST /internal/notifications
+    Note over I: fails or times out after 3 s,<br/>the error is only logged
+    I-->>E: 201 Created (the incident is saved)
+    M-xN: GET /health (2 checks in a row fail)
+    M->>I: POST /internal/incidents (Critical: notification-service unavailable)
+    Note over E,M: When the service is back, browsers reconnect automatically and reload their data,<br/>and Monitoring Service resolves its incident.

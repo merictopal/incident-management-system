@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    actor IT as IT Support (browser)
+    participant G as API Gateway
+    participant I as Incident Service
+    participant N as Notification Service
+    actor E as Reporter (browser)
+
+    IT->>G: PATCH /api/incidents/{id}/status {"status":"In Progress"} (JWT)
+    G->>I: forward
+    I->>I: role must be IT Support (else 403),<br/>status must be an allowed value (else 400)
+    I->>I: change status and record an update (under lock)
+    I->>N: POST /internal/notifications (StatusChanged)
+    I-->>IT: 200 OK (updated incident)
+    N-)IT: IncidentChanged (group "it-support")
+    N-)E: IncidentChanged (group "user:{reporterId}")
+    E->>G: GET /api/incidents (reload)
+    Note over E: Badge "New update" appears without reloading the page

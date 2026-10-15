@@ -1,0 +1,46 @@
+erDiagram
+    USER ||--o{ INCIDENT : "reports (ReporterId)"
+    INCIDENT ||--o{ INCIDENT_UPDATE : "has"
+    USER ||--o{ INCIDENT_UPDATE : "writes (AuthorId)"
+    INCIDENT ||--o{ NOTIFICATION : "is announced by"
+
+    USER {
+        int Id PK "starts at 1001"
+        string Name "unique per role"
+        string Role "Employee | IT Support"
+        string PasswordHash "PBKDF2, never returned"
+        datetime CreatedAt
+    }
+    INCIDENT {
+        guid Id PK
+        string Title "max 120"
+        string Description "max 2000"
+        string Priority "Low | Medium | High | Critical"
+        string Status "Open | In Progress | Resolved | Closed"
+        string ReporterId FK "from the JWT"
+        string ReporterName
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+    INCIDENT_UPDATE {
+        guid Id PK
+        string Message "max 1000"
+        string AuthorId FK
+        string AuthorName
+        datetime CreatedAt
+    }
+    NOTIFICATION {
+        string Type "Created | StatusChanged | Updated | Deleted"
+        guid IncidentId FK
+        string ReporterId
+        string ActorId
+        string Message
+        datetime OccurredAt
+    }
+    SERVICE_STATUS {
+        string Name PK "monitored service"
+        string Status "Unknown | Healthy | Unhealthy"
+        int ConsecutiveFailures
+        double ResponseTimeMs
+        datetime LastCheckedAt
+    }

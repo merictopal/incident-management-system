@@ -1,0 +1,17 @@
+sequenceDiagram
+    autonumber
+    participant M as Monitoring Service
+    participant U as User Service
+    participant I as Incident Service
+    actor IT as IT Support (browser)
+
+    M-xU: GET /health (failure 1, status stays Healthy)
+    M-xU: GET /health (failure 2)
+    M->>M: user-service → Unhealthy
+    M->>I: POST /internal/incidents (Critical)
+    I-)IT: new Critical incident (through Notification Service)
+    Note over U: New logins fail. Users who are already signed in keep working:<br/>every service verifies the JWT itself.
+    M->>U: GET /health (OK)
+    M->>M: user-service → Healthy
+    M->>I: POST /internal/incidents/{id}/resolve
+    I-)IT: incident is Resolved

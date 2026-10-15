@@ -1,0 +1,14 @@
+stateDiagram-v2
+    direction LR
+    [*] --> connecting: page opened / signed in
+    connecting --> live: connected
+    connecting --> offline: failed
+    offline --> connecting: retry after 3 s
+    live --> reconnecting: connection lost
+    reconnecting --> live: reconnected
+    reconnecting --> connecting: gave up, start again
+    live --> [*]: sign out
+    note right of live
+        After every (re)connect the client
+        reloads its data, so no event is lost.
+    end note

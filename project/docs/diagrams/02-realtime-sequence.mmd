@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor E as Employee (browser)
+    participant G as API Gateway
+    participant I as Incident Service
+    participant N as Notification Service
+    actor IT as IT Support (browser)
+
+    Note over E,IT: Both browsers keep an open SignalR connection to the hub
+    E->>G: POST /api/incidents (Bearer JWT)
+    G->>I: forward request
+    I->>I: validate token and input,<br/>reporter = user from token, save
+    I->>N: POST /internal/notifications (X-Internal-Api-Key)
+    I-->>G: 201 Created
+    G-->>E: 201 Created
+    N->>N: store in notification history
+    par to IT Support
+        N-)IT: IncidentChanged (group "it-support")
+    and to the reporter only
+        N-)E: IncidentChanged (group "user:{id}")
+    end
+    Note over E,IT: Other employees receive nothing. Pages update without reloading.

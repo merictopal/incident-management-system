@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor U as User (browser)
+    participant G as API Gateway
+    participant US as User Service
+    participant S as Any other service
+
+    U->>G: POST /api/users/login {name, password, role}
+    Note right of G: rate limit: 20 / minute / IP
+    G->>US: forward
+    alt name + role not registered yet
+        US->>US: hash password (PBKDF2), new ID
+        US-->>U: 201 {token, user}
+    else registered and password correct
+        US-->>U: 200 {token, user}
+    else wrong password
+        US-->>U: 401 Unauthorized
+    end
+    U->>G: later requests with "Authorization: Bearer <token>"
+    G->>S: forward
+    S->>S: verify signature, expiry and role

@@ -1,0 +1,15 @@
+stateDiagram-v2
+    direction TB
+    [*] --> Unknown
+    Unknown --> Healthy: check OK
+    Healthy --> Unhealthy: 2 failed checks in a row
+    Unknown --> Unhealthy: 2 failed checks in a row
+    Unhealthy --> Healthy: check OK
+    note right of Healthy
+        A single failed check only increases a counter,
+        the status stays Healthy.
+    end note
+    note right of Unhealthy
+        Entering: a Critical incident is opened.
+        Leaving: that incident is resolved automatically.
+    end note
