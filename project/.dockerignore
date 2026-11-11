@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/.svelte-kit/
+**/build/
+**/.vs/
+**/.vscode/
+**/*.user
+client/
+tests/
+docs/
+*.docx
+*.md
+.git/
+.env
