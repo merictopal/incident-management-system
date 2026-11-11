@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -10,6 +10,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A28C817B-A20A-4501-B5CE-7A603C456A3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "shared\ServiceDefaults\ServiceDefaults.csproj", "{E9E194AB-D700-47C4-98CC-F2A31A68E7B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "api-gateway\ApiGateway.csproj", "{24A49060-52E4-43BA-AEC2-54763DC0B155}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "services\user-service\UserService.csproj", "{BF1351FB-49FA-4C8C-8743-CCBCA6445B4A}"
 EndProject
@@ -33,6 +35,10 @@ Global
 		{E9E194AB-D700-47C4-98CC-F2A31A68E7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9E194AB-D700-47C4-98CC-F2A31A68E7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9E194AB-D700-47C4-98CC-F2A31A68E7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A49060-52E4-43BA-AEC2-54763DC0B155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A49060-52E4-43BA-AEC2-54763DC0B155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A49060-52E4-43BA-AEC2-54763DC0B155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A49060-52E4-43BA-AEC2-54763DC0B155}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF1351FB-49FA-4C8C-8743-CCBCA6445B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF1351FB-49FA-4C8C-8743-CCBCA6445B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF1351FB-49FA-4C8C-8743-CCBCA6445B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
