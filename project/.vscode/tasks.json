@@ -1,0 +1,41 @@
+{
+  // Terminal > Run Task... (or Ctrl+Shift+P > "Tasks: Run Task")
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Start all services + client (local)",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/scripts/start-local.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "2. Open the app in Microsoft Edge",
+      "type": "process",
+      "command": "cmd",
+      "args": ["/c", "start", "msedge", "http://localhost:5173"],
+      "problemMatcher": []
+    },
+    {
+      "label": "3. Run all tests (build + unit + e2e)",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/scripts/test-all.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Run tests with Docker",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/scripts/test-docker.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "5. Stop all (local)",
+      "type": "process",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/scripts/stop-local.ps1"],
+      "problemMatcher": []
+    }
+  ]
+}
