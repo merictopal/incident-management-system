@@ -1,0 +1,52 @@
+/* Global design tokens and base styles shared by every page. */
+:root {
+  --text: #172033;
+  --text-muted: #5b6678;
+  --border: #e2e8f0;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --accent: #4f46e5;
+  --accent-soft: #eef2ff;
+  --danger: #dc2626;
+  --radius: 18px;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top right, #e0e7ff 0, transparent 36%), linear-gradient(135deg, #f8fbff, #eef3ff);
+  min-height: 100vh;
+}
+
+main { max-width: 1120px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+h2 { font-size: 1.25rem; }
+.eyebrow { color: #5b4be0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0; font-size: 0.85rem; }
+.muted { color: var(--text-muted); }
+.back { color: var(--accent); font-weight: 700; display: inline-block; margin-bottom: 1.5rem; }
+
+.card {
+  background: #ffffffe0;
+  padding: 1.5rem;
+  border: 1px solid #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px #27377a18;
+  min-width: 0;
+}
+
+label { display: grid; gap: 0.4rem; margin: 0.8rem 0; font-weight: 700; }
+input, textarea, select, button { font: inherit; padding: 0.65rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 9px; }
+textarea { min-height: 90px; resize: vertical; width: 100%; box-sizing: border-box; }
+button { cursor: pointer; background: linear-gradient(135deg, #4f46e5, #2563eb); color: #fff; border: 0; font-weight: 800; box-shadow: 0 6px 14px #2563eb33; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+button.secondary { background: #64748b; box-shadow: none; }
+button.danger { background: var(--danger); box-shadow: none; }
+
+.flash { font-weight: 700; padding: 0.6rem 0.9rem; border-radius: 10px; margin: 0 0 1rem; }
+.flash.ok { color: #166534; background: #dcfce7; }
+.flash.error { color: #991b1b; background: #fee2e2; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1.5rem; align-items: start; }
+.stack { display: grid; gap: 1.5rem; min-width: 0; }
+@media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
