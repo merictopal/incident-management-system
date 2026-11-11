@@ -1,6 +1,6 @@
 # 02 Architecture
 
-[Index](README.md) · [01 Overview](01-overview.md) · [02 Architecture](02-architecture.md) · [03 Communication](03-communication.md) · [04 Data model](04-data-model.md) · [05 API](05-api-reference.md) · [07 Design decisions](07-design-decisions.md)
+[Index](README.md) · [01 Overview](01-overview.md) · [02 Architecture](02-architecture.md) · [03 Communication](03-communication.md) · [04 Data model](04-data-model.md) · [05 API](05-api-reference.md) · [06 Running & testing](06-running-and-testing.md) · [07 Design decisions](07-design-decisions.md)
 
 The architecture is described with the views of the C4 model taught in the course: the
 [system context](01-overview.md#system-context-c4-level-1) (level 1), the containers (level 2) and the components of one

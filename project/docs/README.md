@@ -10,6 +10,7 @@ A microservice-based web application for reporting, tracking and resolving IT in
 | [03 Communication](03-communication.md) | Real-time flows, login, status changes, SignalR groups, monitoring, failure behaviour |
 | [04 Data model](04-data-model.md) | Data owned by each service, message contracts, validation rules |
 | [05 API reference](05-api-reference.md) | Gateway routing, every endpoint with access rules, SignalR events, curl examples |
+| [06 Running and testing](06-running-and-testing.md) | Start/stop, automated tests and results, demo script |
 | [07 Design decisions](07-design-decisions.md) | Why each choice was made, known limitations, likely questions |
 
 All diagrams are written in **Mermaid** and rendered directly by GitHub. Their sources (`.mmd`) and exported

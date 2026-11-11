@@ -15,8 +15,33 @@ start complaining.
 a SvelteKit web client, and real-time updates over SignalR. The Monitoring Service checks every service and opens a
 Critical incident automatically when one goes down.
 
-**Status.** The design and documentation are complete (see below). The implementation is added to this folder
-step by step.
+**Status.** Complete: all four services, the API gateway, the web client, Docker setup, automated tests and
+documentation are in this folder.
+
+## Quick start
+
+From this `project/` folder:
+
+```powershell
+docker compose up --build        # option 1: Docker, then open http://localhost:5173
+.\scripts\start-local.ps1         # option 2: without Docker (.NET 9 SDK + Node.js 20)
+.\scripts\test-all.ps1            # build + unit tests + end-to-end tests
+```
+
+More options (VS Code tasks, double-click launchers) and the test results are in
+[06 Running and testing](docs/06-running-and-testing.md).
+
+## Folder structure
+
+| Folder | Contents |
+| --- | --- |
+| `services/` | User, Incident, Notification and Monitoring services (.NET 9 minimal APIs) |
+| `api-gateway/` | YARP reverse proxy: single entry point, CORS, login rate limit |
+| `shared/ServiceDefaults/` | Cross-cutting code: JWT setup, internal API key, message contracts |
+| `client/` | SvelteKit web client with Employee and IT Support workspaces |
+| `tests/` | xUnit integration tests and end-to-end tests (REST + SignalR) |
+| `scripts/` | PowerShell scripts to start, stop and test the system |
+| `docs/` | Documentation with Mermaid diagrams |
 
 ## Timeline
 
@@ -41,6 +66,7 @@ Project board: [Incident Management System](https://github.com/users/merictopal/
 | [03 Communication](docs/03-communication.md) | Real-time flows, login, SignalR groups, monitoring, failure behaviour |
 | [04 Data model](docs/04-data-model.md) | ER diagram, data owned by each service, message contracts, validation |
 | [05 API reference](docs/05-api-reference.md) | Gateway routing, endpoints with access rules, SignalR events |
+| [06 Running and testing](docs/06-running-and-testing.md) | Start/stop, automated tests and results, demo script |
 | [07 Design decisions](docs/07-design-decisions.md) | Decisions, known limitations, likely questions |
 
 All diagrams are written in Mermaid; their sources are in [`docs/diagrams/`](docs/diagrams/).

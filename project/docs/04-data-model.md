@@ -1,6 +1,6 @@
 # 04 Data model
 
-[Index](README.md) · [01 Overview](01-overview.md) · [02 Architecture](02-architecture.md) · [03 Communication](03-communication.md) · [04 Data model](04-data-model.md) · [05 API](05-api-reference.md) · [07 Design decisions](07-design-decisions.md)
+[Index](README.md) · [01 Overview](01-overview.md) · [02 Architecture](02-architecture.md) · [03 Communication](03-communication.md) · [04 Data model](04-data-model.md) · [05 API](05-api-reference.md) · [06 Running & testing](06-running-and-testing.md) · [07 Design decisions](07-design-decisions.md)
 
 Entity-relationship view of the data. The entities are owned by different services (see the table below);
 relationships between services are kept only through IDs, never through a shared database.
