@@ -1,0 +1,8 @@
+{
+  "name": "incident-management-e2e",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end tests that drive the running system through the API Gateway (REST + SignalR).",
+  "scripts": { "test": "node e2e.mjs main" },
+  "dependencies": { "@microsoft/signalr": "^9.0.6" }
+}
