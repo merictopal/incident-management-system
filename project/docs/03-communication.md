@@ -20,11 +20,14 @@ sequenceDiagram
     G->>US: forward
     alt name + role not registered yet
         US->>US: hash password (PBKDF2), new ID
-        US-->>U: 201 {token, user}
+        US-->>G: 201 {token, user}
+        G-->>U: 201 {token, user}
     else registered and password correct
-        US-->>U: 200 {token, user}
+        US-->>G: 200 {token, user}
+        G-->>U: 200 {token, user}
     else wrong password
-        US-->>U: 401 Unauthorized
+        US-->>G: 401 Unauthorized
+        G-->>U: 401 Unauthorized
     end
     U->>G: later requests with "Authorization: Bearer <token>"
     G->>S: forward
@@ -78,10 +81,11 @@ sequenceDiagram
     I->>I: role must be IT Support (else 403),<br/>status must be an allowed value (else 400)
     I->>I: change status and record an update (under lock)
     I->>N: POST /internal/notifications (StatusChanged)
-    I-->>IT: 200 OK (updated incident)
+    I-->>G: 200 OK (updated incident)
+    G-->>IT: 200 OK (updated incident)
     N-)IT: IncidentChanged (group "it-support")
     N-)E: IncidentChanged (group "user:{reporterId}")
-    E->>G: GET /api/incidents (reload)
+    E->>G: GET /api/incidents (refreshes its list in the background)
     Note over E: Badge "New update" appears without reloading the page
 ```
 
@@ -115,18 +119,26 @@ people's incidents.
 stateDiagram-v2
     direction LR
     InProgress: In Progress
-    [*] --> Open: employee reports
-    Open --> InProgress: IT Support
-    InProgress --> Resolved: IT Support or monitoring
-    Open --> Resolved: monitoring auto-resolve
-    Resolved --> Closed: IT Support
-    Closed --> [*]
+    state change <<choice>>
+    [*] --> Open: employee reports /<br/>Monitoring opens
+    Open --> change: IT Support sets status
+    InProgress --> change: IT Support sets status
+    Resolved --> change: IT Support sets status
+    Closed --> change: IT Support sets status
+    change --> Open
+    change --> InProgress
+    change --> Resolved
+    change --> Closed
+    Open --> Resolved: Monitoring (recovered)
+    InProgress --> Resolved: Monitoring (recovered)
 ```
 
 <sub>Source: [`diagrams/04-incident-lifecycle.mmd`](diagrams/04-incident-lifecycle.mmd) · Image: [`diagrams/04-incident-lifecycle.png`](diagrams/04-incident-lifecycle.png)</sub>
 
-Updates and replies can be added in any state. Only IT Support can change the status; Monitoring Service
-resolves the incidents it opened automatically.
+Every incident starts as **Open**. IT Support may set **any** of the four statuses from any status (the diamond is
+that choice; this also allows reopening a closed incident). The server only checks that the value is one of the four
+and that the caller is IT Support. Monitoring Service moves only the incidents it opened itself to **Resolved** when the
+service has recovered. Updates and replies can be added in any state, and IT Support can delete an incident in any state.
 
 ## Monitoring
 
@@ -166,6 +178,7 @@ stateDiagram-v2
     connecting --> live: connected
     connecting --> offline: failed
     offline --> connecting: retry after 3 s
+    connecting --> [*]: token rejected (401),<br/>back to sign-in
     live --> reconnecting: connection lost
     reconnecting --> live: reconnected
     reconnecting --> connecting: gave up, start again

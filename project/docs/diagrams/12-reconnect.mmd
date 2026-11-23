@@ -4,6 +4,7 @@ stateDiagram-v2
     connecting --> live: connected
     connecting --> offline: failed
     offline --> connecting: retry after 3 s
+    connecting --> [*]: token rejected (401),<br/>back to sign-in
     live --> reconnecting: connection lost
     reconnecting --> live: reconnected
     reconnecting --> connecting: gave up, start again

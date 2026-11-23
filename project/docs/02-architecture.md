@@ -20,11 +20,11 @@ flowchart TB
     notification["Notification Service<br/>[container: ASP.NET Core, SignalR]<br/>real-time hub · history"]
     monitoring["Monitoring Service<br/>[container: ASP.NET Core]<br/>health checks"]
 
-    client -- "REST requests + SignalR connection (JWT)" --> gateway
-    gateway -- "forwards /api/users" --> user
-    gateway -- "forwards /api/incidents" --> incident
-    gateway -- "forwards /api/notifications, /hubs" --> notification
-    gateway -- "forwards /api/monitoring" --> monitoring
+    client -- "sends REST requests (HTTP, sync)<br/>and opens a SignalR connection (WebSocket), with JWT" --> gateway
+    gateway -- "forwards /api/users (HTTP, sync)" --> user
+    gateway -- "forwards /api/incidents (HTTP, sync)" --> incident
+    gateway -- "forwards /api/notifications (HTTP, sync)<br/>and /hubs (WebSocket)" --> notification
+    gateway -- "forwards /api/monitoring (HTTP, sync)" --> monitoring
 ```
 
 <sub>Source: [`diagrams/01-architecture.mmd`](diagrams/01-architecture.mmd) · Image: [`diagrams/01-architecture.png`](diagrams/01-architecture.png)</sub>
@@ -67,7 +67,7 @@ every call must contain the shared `X-Internal-Api-Key` header.
 ```mermaid
 flowchart TB
     monitoring["Monitoring Service"]
-    subgraph monitored["Monitored services (GET /health every 5 s)"]
+    subgraph monitored["Monitored services"]
         direction LR
         user["User Service"]
         incident["Incident Service"]
@@ -75,11 +75,11 @@ flowchart TB
     end
     browsers(["Browsers"])
 
-    monitoring -- "health checks" --> monitored
-    monitoring -. "open / resolve automatic incident" .-> incident
-    monitoring -. "live status snapshot" .-> notification
-    incident -. "incident event" .-> notification
-    notification == "SignalR: IncidentChanged, ServiceStatusUpdated" ==> browsers
+    monitoring -- "checks GET /health every 5 s (HTTP, sync)" --> monitored
+    monitoring -- "opens / resolves an automatic incident:<br/>POST /internal/incidents (HTTP, sync)" --> incident
+    monitoring -- "sends the status snapshot:<br/>POST /internal/service-status (HTTP, sync)" --> notification
+    incident -- "reports an incident change:<br/>POST /internal/notifications (HTTP, sync)" --> notification
+    notification == "pushes IncidentChanged, ServiceStatusUpdated<br/>(SignalR over WebSocket, async)" ==> browsers
 ```
 
 <sub>Source: [`diagrams/01b-internal-communication.mmd`](diagrams/01b-internal-communication.mmd) · Image: [`diagrams/01b-internal-communication.png`](diagrams/01b-internal-communication.png)</sub>
@@ -112,9 +112,11 @@ flowchart LR
             monitoring["monitoring-service :8080"]
         end
     end
-    browser --> p5173 --> client
-    browser --> p5000 --> gateway
-    gateway --> user & incident & notification & monitoring
+    browser -- "loads the web app (HTTP)" --> p5173
+    p5173 -- "published port" --> client
+    browser -- "API calls (HTTP) and SignalR (WebSocket)" --> p5000
+    p5000 -- "published port" --> gateway
+    gateway -- "forwards (HTTP)" --> user & incident & notification & monitoring
     classDef hidden fill:#f1f5f9,stroke:#94a3b8,color:#334155
     class user,incident,notification,monitoring hidden
 ```

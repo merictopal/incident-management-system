@@ -25,11 +25,11 @@ flowchart TB
     notification["Notification Service<br/>[container: ASP.NET Core, SignalR]<br/>real-time hub · history"]
     monitoring["Monitoring Service<br/>[container: ASP.NET Core]<br/>health checks"]
 
-    client -- "REST requests + SignalR connection (JWT)" --> gateway
-    gateway -- "forwards /api/users" --> user
-    gateway -- "forwards /api/incidents" --> incident
-    gateway -- "forwards /api/notifications, /hubs" --> notification
-    gateway -- "forwards /api/monitoring" --> monitoring
+    client -- "sends REST requests (HTTP, sync)<br/>and opens a SignalR connection (WebSocket), with JWT" --> gateway
+    gateway -- "forwards /api/users (HTTP, sync)" --> user
+    gateway -- "forwards /api/incidents (HTTP, sync)" --> incident
+    gateway -- "forwards /api/notifications (HTTP, sync)<br/>and /hubs (WebSocket)" --> notification
+    gateway -- "forwards /api/monitoring (HTTP, sync)" --> monitoring
 ```
 
 <sub>Source: [`diagrams/01-architecture.mmd`](diagrams/01-architecture.mmd) · Image: [`diagrams/01-architecture.png`](diagrams/01-architecture.png)</sub>

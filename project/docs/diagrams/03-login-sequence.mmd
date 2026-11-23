@@ -10,11 +10,14 @@ sequenceDiagram
     G->>US: forward
     alt name + role not registered yet
         US->>US: hash password (PBKDF2), new ID
-        US-->>U: 201 {token, user}
+        US-->>G: 201 {token, user}
+        G-->>U: 201 {token, user}
     else registered and password correct
-        US-->>U: 200 {token, user}
+        US-->>G: 200 {token, user}
+        G-->>U: 200 {token, user}
     else wrong password
-        US-->>U: 401 Unauthorized
+        US-->>G: 401 Unauthorized
+        G-->>U: 401 Unauthorized
     end
     U->>G: later requests with "Authorization: Bearer <token>"
     G->>S: forward

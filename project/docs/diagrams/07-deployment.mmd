@@ -12,8 +12,10 @@ flowchart LR
             monitoring["monitoring-service :8080"]
         end
     end
-    browser --> p5173 --> client
-    browser --> p5000 --> gateway
-    gateway --> user & incident & notification & monitoring
+    browser -- "loads the web app (HTTP)" --> p5173
+    p5173 -- "published port" --> client
+    browser -- "API calls (HTTP) and SignalR (WebSocket)" --> p5000
+    p5000 -- "published port" --> gateway
+    gateway -- "forwards (HTTP)" --> user & incident & notification & monitoring
     classDef hidden fill:#f1f5f9,stroke:#94a3b8,color:#334155
     class user,incident,notification,monitoring hidden

@@ -11,8 +11,9 @@ sequenceDiagram
     I->>I: role must be IT Support (else 403),<br/>status must be an allowed value (else 400)
     I->>I: change status and record an update (under lock)
     I->>N: POST /internal/notifications (StatusChanged)
-    I-->>IT: 200 OK (updated incident)
+    I-->>G: 200 OK (updated incident)
+    G-->>IT: 200 OK (updated incident)
     N-)IT: IncidentChanged (group "it-support")
     N-)E: IncidentChanged (group "user:{reporterId}")
-    E->>G: GET /api/incidents (reload)
+    E->>G: GET /api/incidents (refreshes its list in the background)
     Note over E: Badge "New update" appears without reloading the page
