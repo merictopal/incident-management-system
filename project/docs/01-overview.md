@@ -50,8 +50,8 @@ flowchart LR
     it(["IT Support staff<br/>[person]<br/>handles every incident"])
     system["Real-Time Incident Management System<br/>[software system]<br/>reporting, tracking and live notification of IT incidents"]
 
-    employee -- "reports incidents, replies,<br/>receives live updates (HTTPS / WebSocket)" --> system
-    it -- "manages incidents, watches service health,<br/>receives live updates (HTTPS / WebSocket)" --> system
+    employee -- "reports incidents, replies,<br/>receives live updates (HTTP / WebSocket)" --> system
+    it -- "manages incidents, watches service health,<br/>receives live updates (HTTP / WebSocket)" --> system
 ```
 
 <sub>Source: [`diagrams/00-c4-context.mmd`](diagrams/00-c4-context.mmd) · Image: [`diagrams/00-c4-context.png`](diagrams/00-c4-context.png)</sub>

@@ -6,7 +6,7 @@ A microservice-based web application for reporting, tracking and resolving IT in
 | Page | Contents |
 |---|---|
 | [01 Overview](01-overview.md) | What the system does, course requirements, services, use cases, technology |
-| [02 Architecture](02-architecture.md) | Component, internal-communication and deployment views, code organization, security model |
+| [02 Architecture](02-architecture.md) | Container (C4 level 2) and component (C4 level 3) views, internal communication, deployment view, code organization, security model |
 | [03 Communication](03-communication.md) | Real-time flows, login, status changes, SignalR groups, monitoring, failure behaviour |
 | [04 Data model](04-data-model.md) | Data owned by each service, message contracts, validation rules |
 | [05 API reference](05-api-reference.md) | Gateway routing, every endpoint with access rules, SignalR events, curl examples |
@@ -15,6 +15,8 @@ A microservice-based web application for reporting, tracking and resolving IT in
 
 All diagrams are written in **Mermaid** and rendered directly by GitHub. Their sources (`.mmd`) and exported
 images (`.png`) are in [`diagrams/`](diagrams/).
+
+Container view (C4 level 2): the deployable parts of the system and how the browser reaches them.
 
 ```mermaid
 flowchart TB
