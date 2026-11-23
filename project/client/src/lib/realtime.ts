@@ -32,8 +32,14 @@ export function connectRealtime(token: string, handlers: RealtimeHandlers) {
   let stopped = false;
   const setState = (state: ConnectionState) => handlers.onState?.(state);
 
-  connection.on('IncidentChanged', (event: IncidentNotification) => handlers.onIncidentChanged?.(event));
-  connection.on('ServiceStatusUpdated', (statuses: ServiceStatus[]) => handlers.onServiceStatus?.(statuses));
+  // Handlers must not return a value: SignalR treats a returned value as a client result
+  // and logs an error, because the server does not expect one for these events.
+  connection.on('IncidentChanged', (event: IncidentNotification) => {
+    handlers.onIncidentChanged?.(event);
+  });
+  connection.on('ServiceStatusUpdated', (statuses: ServiceStatus[]) => {
+    handlers.onServiceStatus?.(statuses);
+  });
 
   connection.onreconnecting(() => setState('reconnecting'));
   connection.onreconnected(() => {
